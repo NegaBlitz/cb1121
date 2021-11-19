@@ -1,0 +1,22 @@
+[
+  {
+    "toolCode":"CHNS",
+    "toolType": "Chainsaw",
+    "brand": "Stihl"
+  },
+  {
+    "toolCode":"LADW",
+    "toolType": "Ladder",
+    "brand": "Werner"
+  },
+  {
+    "toolCode":"JAKD",
+    "toolType": "Jackhammer",
+    "brand": "DeWalt"
+  },
+  {
+    "toolCode":"JAKR",
+    "toolType": "Jackhammer",
+    "brand": "Ridgid"
+  }
+]
