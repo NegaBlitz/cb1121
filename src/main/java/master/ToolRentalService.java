@@ -1,7 +1,7 @@
 package master;
 
 import model.RentalTool;
-import util.ToolDefinitions;
+import util.ToolDefinitionsUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,16 +9,17 @@ import java.util.List;
 
 public class ToolRentalService {
 
-    static ToolDefinitions toolDefinitions = new ToolDefinitions();
+    static ToolDefinitionsUtil toolDefinitionsUtil = new ToolDefinitionsUtil();
 
     public static void main(String[] args){
         List<RentalTool> allTools = new ArrayList<>();
         try {
-            allTools = toolDefinitions.getToolDefinitions();
+            allTools = toolDefinitionsUtil.getRentalOptions();
         } catch (IOException e){
-            System.out.println("Could not get data for tools");
+            System.out.println("Could not get data for tools due to exception");
             e.printStackTrace();
             System.exit(1);
         }
+        System.out.println("Exiting system");
     }
 }
