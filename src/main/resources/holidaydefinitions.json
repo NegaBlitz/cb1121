@@ -1,0 +1,13 @@
+[
+  {
+    "month": "July",
+    "day": 4,
+    "observedOnWeekend": false
+  },
+  {
+    "month": "September",
+    "dayOfWeek": "Monday",
+    "dayOfWeekPosition": "First",
+    "observedOnWeekend": true
+  }
+]
