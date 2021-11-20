@@ -50,9 +50,6 @@ public class ToolRentalService {
             for(int i = 0; i < daysToRent; i++) {
                 boolean isHoliday = dateUtil.checkIfHoliday(startDate.plusDays(i));
                 boolean isWeekend = dateUtil.checkIfWeekend(startDate.plusDays(i));
-                System.out.println(startDate.plusDays(i));
-                System.out.println("Is holiday: " + isHoliday);
-                System.out.println("Is weekend: " + isWeekend);
                 double priceForDay = calculateDayRent(selectedTool, isHoliday, isWeekend);
                 if(priceForDay > 0){
                     chargeDays++;
@@ -63,6 +60,7 @@ public class ToolRentalService {
             double discount = preDiscountCharge * (discountPercentage/100.0);
             double finalCharge = preDiscountCharge - discount;
 
+            // Make these conversions in the print out and calculate within a different method
             rentalOrder.setRentalDays(Integer.toString(daysToRent));
             rentalOrder.setCheckoutDate(dateUtil.getFormattedDate(startDate));
             rentalOrder.setDueDate(dateUtil.getFormattedDate(startDate.plusDays(daysToRent)));
