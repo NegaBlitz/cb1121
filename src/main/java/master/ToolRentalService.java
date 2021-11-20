@@ -1,11 +1,13 @@
 package master;
 
+import model.RentalOrder;
 import model.RentalTool;
 import util.ConsolePromptUtil;
 import util.DateUtil;
 import util.ToolDefinitionsUtil;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -17,35 +19,42 @@ public class ToolRentalService {
     private static String DATE_CHECK_REGEX = "^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$";
 
     public static void main(String[] args){
-        HashMap<String, RentalTool> allTools = new HashMap<>();
         try {
-            allTools = toolDefinitionsUtil.getRentalOptions();
-        } catch (IOException e){
-            System.out.println("Could not get data for tools due to exception");
-            e.printStackTrace();
-            System.exit(1);
-        }
+            HashMap<String, RentalTool> rentalTools = new HashMap<>();
+            RentalOrder rentalOrder = new RentalOrder();
+            try {
+                rentalTools = toolDefinitionsUtil.getRentalOptions();
+            } catch (IOException e) {
+                System.out.println("Could not get data for tools due to exception");
+                e.printStackTrace();
+                System.exit(1);
+            }
 
-        Scanner scanner = new Scanner(System.in);
-        String toolCode = getToolCodeFromUser(scanner, allTools);
-        String dateString = getDateStringFromUser(scanner);
-        Integer discountPercentage = getDiscountPercentageFromUser(scanner);
-        Integer daysToRent = getTotalRentalDaysFromUser(scanner);
+            Scanner scanner = new Scanner(System.in);
+            String toolCode = getToolCodeFromUser(scanner, rentalTools);
+            RentalTool selectedTool = rentalTools.get(toolCode);
+            String dateString = getDateStringFromUser(scanner);
+            Integer discountPercentage = getDiscountPercentageFromUser(scanner);
+            Integer daysToRent = getTotalRentalDaysFromUser(scanner);
+            fillRentalOrderFieldsForTool(selectedTool, rentalOrder);
 
-        /*try {
-            System.out.println("Please insert a date");
-            LocalDate date = dateUtil.getDateFromString("2019-07-04");
-            boolean isHoliday = dateUtil.checkIfHoliday(date);
-            System.out.println(isHoliday);
+            consolePromptUtil.printCalculationMessage();
+
+            LocalDate startDate = dateUtil.getDateFromString(dateString);
+            Double finalPrice = 0.00;
+
+            for(int i = 0; i < daysToRent; i++) {
+                boolean isHoliday = dateUtil.checkIfHoliday(startDate.plusDays(i));
+                boolean isWeekend = dateUtil.checkIfWeekend(startDate.plusDays(i));
+                finalPrice += calculateDayRent(selectedTool, isWeekend, isHoliday);
+            }
+            consolePromptUtil.printReport(rentalOrder);
+            scanner.close();
+            System.out.println("Exiting system");
         } catch (Exception e) {
-            System.out.println("Could not check date due to exception");
+            System.out.println("Fatal exception in program; exiting system.");
             e.printStackTrace();
-            userInput.close();
-            System.exit(1);
-        }*/
-
-        scanner.close();
-        System.out.println("Exiting system");
+        }
     }
 
     private static String getToolCodeFromUser(Scanner scanner, HashMap<String, RentalTool> allTools){
@@ -109,5 +118,20 @@ public class ToolRentalService {
             }
         }
         return daysToRent;
+    }
+
+    private static void fillRentalOrderFieldsForTool(RentalTool tool, RentalOrder rentalOrder){
+        rentalOrder.setDailyRentalCharge(tool.getDailyCharge().toString());
+        rentalOrder.setToolBrand(tool.getToolBrand());
+        rentalOrder.setToolType(tool.getToolType());
+        rentalOrder.setToolCode(tool.getToolCode());
+    }
+
+    private static Double calculateDayRent(RentalTool tool, boolean isHoliday, boolean isWeekend){
+        Double totalPriceForDay = 0.00;
+        if(tool.isHolidayCharge() && isHoliday || tool.isWeekendCharge() && isWeekend || tool.isWeekdayCharge() && !isWeekend){
+            totalPriceForDay += tool.getDailyCharge();
+        }
+        return totalPriceForDay;
     }
 }

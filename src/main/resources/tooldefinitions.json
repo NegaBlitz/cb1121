@@ -1,20 +1,20 @@
 {
   "Ladder": {
     "dailyCharge": 1.99,
-    "weekdayCharge": "Yes",
-    "weekendCharge": "Yes",
-    "holidayCharge": "No"
+    "weekdayCharge": true,
+    "weekendCharge": true,
+    "holidayCharge": false
   },
   "Chainsaw": {
     "dailyCharge": 1.49,
-    "weekdayCharge": "Yes",
-    "weekendCharge": "No",
-    "holidayCharge": "Yes"
+    "weekdayCharge": true,
+    "weekendCharge": false,
+    "holidayCharge": true
   },
   "Jackhammer": {
     "dailyCharge": 2.99,
-    "weekdayCharge": "Yes",
-    "weekendCharge": "Yes",
-    "holidayCharge": "No"
+    "weekdayCharge": true,
+    "weekendCharge": true,
+    "holidayCharge": false
   }
 }

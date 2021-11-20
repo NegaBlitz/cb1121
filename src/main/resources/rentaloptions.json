@@ -2,21 +2,21 @@
   {
     "toolCode":"CHNS",
     "toolType": "Chainsaw",
-    "brand": "Stihl"
+    "toolBrand": "Stihl"
   },
   {
     "toolCode":"LADW",
     "toolType": "Ladder",
-    "brand": "Werner"
+    "toolBrand": "Werner"
   },
   {
     "toolCode":"JAKD",
     "toolType": "Jackhammer",
-    "brand": "DeWalt"
+    "toolBrand": "DeWalt"
   },
   {
     "toolCode":"JAKR",
     "toolType": "Jackhammer",
-    "brand": "Ridgid"
+    "toolBrand": "Ridgid"
   }
 ]

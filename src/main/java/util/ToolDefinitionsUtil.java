@@ -38,9 +38,9 @@ public class ToolDefinitionsUtil {
         for (RentalTool tool : allRentals) {
             RentalTool toolDefinition = allToolDefinitions.get(tool.getToolType());
             tool.setDailyCharge(toolDefinition.getDailyCharge());
-            tool.setHolidayCharge(toolDefinition.getHolidayCharge());
-            tool.setWeekdayCharge(toolDefinition.getWeekdayCharge());
-            tool.setWeekendCharge(toolDefinition.getWeekendCharge());
+            tool.setHolidayCharge(toolDefinition.isHolidayCharge());
+            tool.setWeekdayCharge(toolDefinition.isWeekdayCharge());
+            tool.setWeekendCharge(toolDefinition.isWeekendCharge());
             tool.setToolCode(tool.getToolCode().toUpperCase());
             toolRentalOptions.put(tool.getToolCode(), tool);
         }

@@ -66,14 +66,14 @@ public class DateUtil {
             } else if(date.getDayOfWeek() == DayOfWeek.MONDAY &&
                     (holiday.getDay() == date.getDayOfMonth() + 1 || holiday.getDay() == date.getDayOfMonth())){
                 return true;
-            } else if(isWeekend(date)){
+            } else if(checkIfWeekend(date)){
                 return false;
             }
         }
         return holiday.getDay() == date.getDayOfMonth();
     }
 
-    public boolean isWeekend(LocalDate date){
+    public boolean checkIfWeekend(LocalDate date){
         if(date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) return true;
         return false;
     }

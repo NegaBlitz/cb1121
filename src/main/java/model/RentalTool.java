@@ -5,9 +5,9 @@ public class RentalTool {
     String toolType;
     String toolBrand;
     Double dailyCharge;
-    String weekdayCharge;
-    String weekendCharge;
-    String holidayCharge;
+    Boolean weekdayCharge;
+    Boolean weekendCharge;
+    Boolean holidayCharge;
 
     public String getToolCode() {
         return toolCode;
@@ -41,27 +41,27 @@ public class RentalTool {
         this.dailyCharge = dailyCharge;
     }
 
-    public String getWeekdayCharge() {
+    public Boolean isWeekdayCharge() {
         return weekdayCharge;
     }
 
-    public void setWeekdayCharge(String weekdayCharge) {
+    public void setWeekdayCharge(Boolean weekdayCharge) {
         this.weekdayCharge = weekdayCharge;
     }
 
-    public String getWeekendCharge() {
+    public Boolean isWeekendCharge() {
         return weekendCharge;
     }
 
-    public void setWeekendCharge(String weekendCharge) {
+    public void setWeekendCharge(Boolean weekendCharge) {
         this.weekendCharge = weekendCharge;
     }
 
-    public String getHolidayCharge() {
+    public Boolean isHolidayCharge() {
         return holidayCharge;
     }
 
-    public void setHolidayCharge(String holidayCharge) {
+    public void setHolidayCharge(Boolean holidayCharge) {
         this.holidayCharge = holidayCharge;
     }
 }
