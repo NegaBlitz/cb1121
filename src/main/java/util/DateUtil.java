@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,5 +109,10 @@ public class DateUtil {
         } catch (ParseException ex) {
             return false;
         }
+    }
+
+    public String getFormattedDate(LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+        return date.format(formatter);
     }
 }

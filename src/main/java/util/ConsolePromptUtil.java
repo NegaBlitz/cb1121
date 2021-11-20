@@ -74,7 +74,7 @@ public class ConsolePromptUtil {
         System.out.println("Due date: " + rentalOrder.getDueDate());
         System.out.println("Daily rental charge: " + rentalOrder.getDailyRentalCharge());
         System.out.println("Charge days: " + rentalOrder.getChargeDays());
-        System.out.println("Pre-discount charge " + rentalOrder.getPreDiscountCharge());
+        System.out.println("Pre-discount charge: " + rentalOrder.getPreDiscountCharge());
         System.out.println("Discount percent: " + rentalOrder.getDiscountPercent());
         System.out.println("Discount amount: " + rentalOrder.getDiscountAmount());
         System.out.println("Final charge: " + rentalOrder.getFinalCharge());

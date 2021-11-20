@@ -14,7 +14,7 @@
   "Jackhammer": {
     "dailyCharge": 2.99,
     "weekdayCharge": true,
-    "weekendCharge": true,
+    "weekendCharge": false,
     "holidayCharge": false
   }
 }
