@@ -19,7 +19,7 @@ public class ToolDefinitionsUtil {
     private final String FILE_PATH_TOOL_DEFINITIONS = "tooldefinitions.json";
     private static FileUtil fileUtil = new FileUtil();
 
-    public List<RentalTool> getRentalOptions() throws IOException {
+    public HashMap<String, RentalTool> getRentalOptions() throws IOException {
         InputStream stream = fileUtil.getFileFromResourceAsStream(FILE_PATH_RENTAL_OPTIONS);
         String allRentalsJson = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
         stream.close();
@@ -28,20 +28,22 @@ public class ToolDefinitionsUtil {
         return getToolDefinitionsForRentals(allRentals);
     }
 
-    public List<RentalTool> getToolDefinitionsForRentals(List<RentalTool> allRentals) throws IOException {
+    public HashMap<String, RentalTool> getToolDefinitionsForRentals(List<RentalTool> allRentals) throws IOException {
         InputStream stream = fileUtil.getFileFromResourceAsStream(FILE_PATH_TOOL_DEFINITIONS);
         String allToolDefinitionsJson = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
         stream.close();
         Type allToolDefinitionsType = new TypeToken<HashMap<String, RentalTool>>(){}.getType();
         HashMap<String, RentalTool> allToolDefinitions = gson.fromJson(allToolDefinitionsJson, allToolDefinitionsType);
-
+        HashMap<String, RentalTool> toolRentalOptions = new HashMap<>();
         for (RentalTool tool : allRentals) {
             RentalTool toolDefinition = allToolDefinitions.get(tool.getToolType());
             tool.setDailyCharge(toolDefinition.getDailyCharge());
             tool.setHolidayCharge(toolDefinition.getHolidayCharge());
             tool.setWeekdayCharge(toolDefinition.getWeekdayCharge());
             tool.setWeekendCharge(toolDefinition.getWeekendCharge());
+            tool.setToolCode(tool.getToolCode().toUpperCase());
+            toolRentalOptions.put(tool.getToolCode(), tool);
         }
-        return allRentals;
+        return toolRentalOptions;
     }
 }

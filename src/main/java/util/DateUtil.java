@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -93,5 +95,18 @@ public class DateUtil {
         Type allHolidaysType = new TypeToken<ArrayList<Holiday>>(){}.getType();
         List<Holiday> allHolidays = gson.fromJson(allHolidaysJson, allHolidaysType);
         return allHolidays;
+    }
+
+    public static boolean checkIfDateIsValid(String dateString) {
+        if (dateString == null || !dateString.matches("\\d{4}-[01]\\d-[0-3]\\d"))
+            return false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(dateString);
+            return true;
+        } catch (ParseException ex) {
+            return false;
+        }
     }
 }
