@@ -80,7 +80,8 @@ public class DateUtil {
     }
 
     public LocalDate getDateFromString(String dateString){
-        LocalDate date = LocalDate.parse(dateString);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+        LocalDate date = LocalDate.parse(dateString, formatter);
         return date;
     }
 
@@ -99,9 +100,9 @@ public class DateUtil {
     }
 
     public static boolean checkIfDateIsValid(String dateString) {
-        if (dateString == null || !dateString.matches("\\d{4}-[01]\\d-[0-3]\\d"))
+        if (dateString == null || !dateString.matches("\\d{2}\\/\\d{2}\\/\\d{2}"))
             return false;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
         dateFormat.setLenient(false);
         try {
             dateFormat.parse(dateString);

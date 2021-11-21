@@ -1,6 +1,5 @@
 package master;
 
-import com.google.gson.Gson;
 import exceptions.InvalidUserInputException;
 import model.RentalOrder;
 import model.RentalTool;
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ToolRentalServiceTest {
-    Gson gson = new Gson();
     RentalOrder rentalOrder = new RentalOrder();
     RentalTool rentalTool = new RentalTool();
     ToolRentalService toolRentalService = new ToolRentalService();
