@@ -58,6 +58,7 @@ class ToolRentalServiceTest {
         assertNotNull(rentalTool);
 
         toolRentalService.rentalCheckout(rentalTool, rentalOrder);
+        assertTrue(rentalOrder.getPreDiscountCharge().equals(3.98));
         assertTrue(rentalOrder.getFinalCharge().equals(3.58));
         assertTrue(rentalOrder.getChargeDays().equals(2));
     }
@@ -73,6 +74,7 @@ class ToolRentalServiceTest {
         assertNotNull(rentalTool);
 
         toolRentalService.rentalCheckout(rentalTool, rentalOrder);
+        assertTrue(rentalOrder.getPreDiscountCharge().equals(4.47));
         assertTrue(rentalOrder.getFinalCharge().equals(3.35));
         assertTrue(rentalOrder.getChargeDays().equals(3));
     }
@@ -88,6 +90,7 @@ class ToolRentalServiceTest {
         assertNotNull(rentalTool);
 
         toolRentalService.rentalCheckout(rentalTool, rentalOrder);
+        assertTrue(rentalOrder.getPreDiscountCharge().equals(8.97));
         assertTrue(rentalOrder.getFinalCharge().equals(8.97));
         assertTrue(rentalOrder.getChargeDays().equals(3));
     }
@@ -103,6 +106,7 @@ class ToolRentalServiceTest {
         assertNotNull(rentalTool);
 
         toolRentalService.rentalCheckout(rentalTool, rentalOrder);
+        assertTrue(rentalOrder.getPreDiscountCharge().equals(17.94));
         assertTrue(rentalOrder.getFinalCharge().equals(17.94));
         assertTrue(rentalOrder.getChargeDays().equals(6));
     }
@@ -118,6 +122,7 @@ class ToolRentalServiceTest {
         assertNotNull(rentalTool);
 
         toolRentalService.rentalCheckout(rentalTool, rentalOrder);
+        assertTrue(rentalOrder.getPreDiscountCharge().equals(2.99));
         assertTrue(rentalOrder.getFinalCharge().equals(1.50));
         assertTrue(rentalOrder.getChargeDays().equals(1));
     }
