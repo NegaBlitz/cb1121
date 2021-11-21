@@ -3,9 +3,14 @@ package util;
 import model.RentalOrder;
 import model.RentalTool;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 
 public class ConsolePromptUtil {
+
+    private static NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+    private static DateUtil dateUtil = new DateUtil();
+
     private final String PRINT_GREETING_FOR_USER = "Welcome to the tool rental application!";
     private final String PRINT_CALCULATION_MESSAGE = "Calculating price...";
     private final String PROMPT_FOR_TOOL_CODE = "Please insert the tool code for the tool that the customer wishes to rent: ";
@@ -70,13 +75,13 @@ public class ConsolePromptUtil {
         System.out.println("Tool type: " + rentalOrder.getToolType());
         System.out.println("Tool brand: " + rentalOrder.getToolBrand());
         System.out.println("Rental days: " + rentalOrder.getRentalDays());
-        System.out.println("Check out date: " + rentalOrder.getCheckoutDate());
-        System.out.println("Due date: " + rentalOrder.getDueDate());
-        System.out.println("Daily rental charge: " + rentalOrder.getDailyRentalCharge());
+        System.out.println("Check out date: " + dateUtil.getFormattedDate(rentalOrder.getCheckoutDate()));
+        System.out.println("Due date: " + dateUtil.getFormattedDate(rentalOrder.getDueDate()));
+        System.out.println("Daily rental charge: " + currencyFormatter.format(rentalOrder.getDailyRentalCharge()));
         System.out.println("Charge days: " + rentalOrder.getChargeDays());
-        System.out.println("Pre-discount charge: " + rentalOrder.getPreDiscountCharge());
-        System.out.println("Discount percent: " + rentalOrder.getDiscountPercent());
-        System.out.println("Discount amount: " + rentalOrder.getDiscountAmount());
-        System.out.println("Final charge: " + rentalOrder.getFinalCharge());
+        System.out.println("Pre-discount charge: " + currencyFormatter.format(rentalOrder.getPreDiscountCharge()));
+        System.out.println("Discount percent: " + rentalOrder.getDiscountPercent()+"%");
+        System.out.println("Discount amount: " + currencyFormatter.format(rentalOrder.getDiscountAmount()));
+        System.out.println("Final charge: " + currencyFormatter.format(rentalOrder.getFinalCharge()));
     }
 }

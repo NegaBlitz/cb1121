@@ -1,18 +1,20 @@
 package model;
 
+import java.time.LocalDate;
+
 public class RentalOrder {
     String toolCode;
     String toolType;
     String toolBrand;
-    String rentalDays;
-    String checkoutDate;
-    String dueDate;
-    String dailyRentalCharge;
-    String chargeDays;
-    String preDiscountCharge;
-    String discountPercent;
-    String discountAmount;
-    String finalCharge;
+    Integer rentalDays;
+    LocalDate checkoutDate;
+    LocalDate dueDate;
+    Double dailyRentalCharge;
+    Integer chargeDays;
+    Double preDiscountCharge;
+    Integer discountPercent;
+    Double discountAmount;
+    Double finalCharge;
 
     public String getToolCode() {
         return toolCode;
@@ -38,75 +40,75 @@ public class RentalOrder {
         this.toolBrand = toolBrand;
     }
 
-    public String getRentalDays() {
+    public Integer getRentalDays() {
         return rentalDays;
     }
 
-    public void setRentalDays(String rentalDays) {
+    public void setRentalDays(Integer rentalDays) {
         this.rentalDays = rentalDays;
     }
 
-    public String getCheckoutDate() {
+    public LocalDate getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(String checkoutDate) {
+    public void setCheckoutDate(LocalDate checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 
-    public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public String getDailyRentalCharge() {
+    public Double getDailyRentalCharge() {
         return dailyRentalCharge;
     }
 
-    public void setDailyRentalCharge(String dailyRentalCharge) {
+    public void setDailyRentalCharge(Double dailyRentalCharge) {
         this.dailyRentalCharge = dailyRentalCharge;
     }
 
-    public String getChargeDays() {
+    public Integer getChargeDays() {
         return chargeDays;
     }
 
-    public void setChargeDays(String chargeDays) {
+    public void setChargeDays(Integer chargeDays) {
         this.chargeDays = chargeDays;
     }
 
-    public String getPreDiscountCharge() {
+    public Double getPreDiscountCharge() {
         return preDiscountCharge;
     }
 
-    public void setPreDiscountCharge(String preDiscountCharge) {
+    public void setPreDiscountCharge(Double preDiscountCharge) {
         this.preDiscountCharge = preDiscountCharge;
     }
 
-    public String getDiscountPercent() {
+    public Integer getDiscountPercent() {
         return discountPercent;
     }
 
-    public void setDiscountPercent(String discountPercent) {
+    public void setDiscountPercent(Integer discountPercent) {
         this.discountPercent = discountPercent;
     }
 
-    public String getDiscountAmount() {
+    public Double getDiscountAmount() {
         return discountAmount;
     }
 
-    public void setDiscountAmount(String discountAmount) {
+    public void setDiscountAmount(Double discountAmount) {
         this.discountAmount = discountAmount;
     }
 
-    public String getFinalCharge() {
+    public Double getFinalCharge() {
         return finalCharge;
     }
 
-    public void setFinalCharge(String finalCharge) {
+    public void setFinalCharge(Double finalCharge) {
         this.finalCharge = finalCharge;
     }
 }
