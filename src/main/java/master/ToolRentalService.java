@@ -1,5 +1,6 @@
 package master;
 
+import exceptions.InvalidUserInputException;
 import model.RentalOrder;
 import model.RentalTool;
 import util.ConsolePromptUtil;
@@ -7,6 +8,7 @@ import util.DateUtil;
 import util.ToolDefinitionsUtil;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -16,23 +18,13 @@ public class ToolRentalService {
     private static ToolDefinitionsUtil toolDefinitionsUtil = new ToolDefinitionsUtil();
     private static DateUtil dateUtil = new DateUtil();
     private static ConsolePromptUtil consolePromptUtil = new ConsolePromptUtil();
-    private static String DATE_CHECK_REGEX = "^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$";
 
     public static void main(String[] args){
         try {
-            HashMap<String, RentalTool> rentalTools = new HashMap<>();
             RentalOrder rentalOrder = new RentalOrder();
-            try {
-                rentalTools = toolDefinitionsUtil.getRentalOptions();
-            } catch (IOException e) {
-                System.out.println("Could not get data for tools due to exception");
-                e.printStackTrace();
-                System.exit(1);
-            }
 
             Scanner scanner = new Scanner(System.in);
-            String toolCode = getToolCodeFromUser(scanner, rentalTools);
-            RentalTool rentedTool = rentalTools.get(toolCode);
+            RentalTool rentedTool = getRentedToolFromUser(scanner);
             String dateString = getDateStringFromUser(scanner);
             Integer discountPercentage = getDiscountPercentageFromUser(scanner);
             Integer daysToRent = getTotalRentalDaysFromUser(scanner);
@@ -50,7 +42,7 @@ public class ToolRentalService {
             rentalOrder.setDiscountPercent(discountPercentage);
 
             consolePromptUtil.printCalculationMessage();
-            calculateFinalPrice(rentedTool, rentalOrder);
+            rentalCheckout(rentedTool, rentalOrder);
             consolePromptUtil.printReport(rentalOrder);
             System.out.println("Exiting system");
         } catch (Exception e) {
@@ -59,7 +51,8 @@ public class ToolRentalService {
         }
     }
 
-    private static String getToolCodeFromUser(Scanner scanner, HashMap<String, RentalTool> allTools){
+    private static RentalTool getRentedToolFromUser(Scanner scanner) throws IOException {
+        HashMap<String, RentalTool> allTools = toolDefinitionsUtil.getRentalOptions();
         consolePromptUtil.promptUserForToolCode();
         String toolCode = scanner.nextLine().toUpperCase();
 
@@ -69,7 +62,7 @@ public class ToolRentalService {
             consolePromptUtil.promptUserForToolCode();
             toolCode = scanner.nextLine().toUpperCase();
         }
-        return toolCode;
+        return allTools.get(toolCode);
     }
 
     private static String getDateStringFromUser(Scanner scanner){
@@ -122,12 +115,18 @@ public class ToolRentalService {
         return daysToRent;
     }
 
-    private static void calculateFinalPrice(RentalTool rentedTool, RentalOrder rentalOrder) throws IOException {
+    protected static void rentalCheckout(RentalTool rentedTool, RentalOrder rentalOrder) throws IOException, InvalidUserInputException {
         Integer daysToRent = rentalOrder.getRentalDays();
         LocalDate startDate = rentalOrder.getCheckoutDate();
         Integer discountPercentage = rentalOrder.getDiscountPercent();
         Double preDiscountCharge = 0.00;
         int chargeDays = 0;
+        if(daysToRent <= 0){
+            throw new InvalidUserInputException("Days to rent must be greater than zero; Found " + daysToRent);
+        }
+        if(discountPercentage > 100 || discountPercentage < 0){
+            throw new InvalidUserInputException("Discount Percentage must be between 0 and 100; Found " + discountPercentage);
+        }
 
         for(int i = 0; i < daysToRent; i++) {
             boolean isHoliday = dateUtil.checkIfHoliday(startDate.plusDays(i));
@@ -139,18 +138,21 @@ public class ToolRentalService {
             }
         }
 
-        double discount = preDiscountCharge * (discountPercentage/100.0);
-        double finalCharge = preDiscountCharge - discount;
-
+        DecimalFormat df = new DecimalFormat("#.##");
+        Double discount = preDiscountCharge * (discountPercentage/100.0);
+        Double finalCharge = preDiscountCharge - discount;
         rentalOrder.setChargeDays(chargeDays);
-        rentalOrder.setDiscountAmount(discount);
-        rentalOrder.setPreDiscountCharge(preDiscountCharge);
-        rentalOrder.setFinalCharge(finalCharge);
+        rentalOrder.setDiscountAmount(Double.valueOf(df.format(discount)));
+        rentalOrder.setPreDiscountCharge(Double.valueOf(df.format(preDiscountCharge)));
+        rentalOrder.setFinalCharge(Double.valueOf(df.format(finalCharge)));
     }
 
     private static Double calculateDayRent(RentalTool rentedTool, boolean isHoliday, boolean isWeekend){
         Double totalPriceForDay = 0.00;
-        if(rentedTool.isHolidayCharge() && isHoliday || rentedTool.isWeekendCharge() && isWeekend || rentedTool.isWeekdayCharge() && !isWeekend){
+        if((!rentedTool.isHolidayCharge() && isHoliday) || (!rentedTool.isWeekendCharge() && isWeekend)){
+            return totalPriceForDay;
+        }
+        if((rentedTool.isWeekdayCharge() && !isWeekend) || (rentedTool.isWeekendCharge() && isWeekend)){
             totalPriceForDay += rentedTool.getDailyCharge();
         }
         return totalPriceForDay;

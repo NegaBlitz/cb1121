@@ -62,10 +62,10 @@ public class DateUtil {
     private boolean isHolidayForDate(Holiday holiday, LocalDate date){
         if(!holiday.isObservedOnWeekend()){
             if(date.getDayOfWeek() == DayOfWeek.FRIDAY &&
-                    (holiday.getDay() == date.getDayOfMonth() - 1 || holiday.getDay() == date.getDayOfMonth())) {
+                    (holiday.getDay() == date.getDayOfMonth() + 1 || holiday.getDay() == date.getDayOfMonth())) {
                 return true;
             } else if(date.getDayOfWeek() == DayOfWeek.MONDAY &&
-                    (holiday.getDay() == date.getDayOfMonth() + 1 || holiday.getDay() == date.getDayOfMonth())){
+                    (holiday.getDay() == date.getDayOfMonth() - 1 || holiday.getDay() == date.getDayOfMonth())){
                 return true;
             } else if(checkIfWeekend(date)){
                 return false;
